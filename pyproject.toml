@@ -1,0 +1,40 @@
+[project]
+name = "sabitax-backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.18.3",
+    "asyncpg>=0.31.0",
+    "email-validator>=2.3.0",
+    "fastapi>=0.128.0",
+    "httpx>=0.28.1",
+    "openai>=2.16.0",
+    "passlib>=1.7.4",
+    "bcrypt<4.0.0",
+    "psycopg2-binary>=2.9.11",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.12.0",
+    "python-jose[cryptography]>=3.5.0",
+    "python-multipart>=0.0.22",
+    "sqlalchemy>=2.0.46",
+    "uvicorn[standard]>=0.40.0",
+]
+
+[dependency-groups]
+dev = [
+    "aiosqlite>=0.22.1",
+    "pytest>=9.0.2",
+    "pytest-asyncio>=1.3.0",
+    "types-passlib>=1.7.7",
+    "types-python-jose>=3.3.0",
+    "mypy>=1.0",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = false
+ignore_missing_imports = true
+warn_return_any = false
+warn_unused_ignores = false
