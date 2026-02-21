@@ -13,25 +13,26 @@ Nigerian Tax Management Platform - FastAPI Backend
 
 ## Features
 
-- 🔐 **Authentication**: Email/password with JWT, Google/Apple OAuth
-- 📊 **Transactions**: Track income and expenses with categories
-- 💰 **Tax Calculations**: Nigerian PIT, VAT, PAYE with FIRS brackets
-- 📋 **Tax Filing**: Submit and track tax returns
-- 🆔 **TIN Management**: Apply for Tax Identification Number
-- 💳 **Bank Integration**: Link accounts via Mono/Okra
-- 🤖 **AI Tax Assistant**: OpenAI-powered tax guidance
-- 👥 **Referrals**: Earn ₦1,000 per referral
-- 📱 **Notifications**: Tax reminders and updates
+- **Authentication** - Email/password with JWT tokens
+- **Transactions** - Track income and expenses with categories
+- **Tax Calculations** - Nigerian PIT, VAT with FIRS brackets
+- **Tax Filing** - Submit and track tax returns
+- **TIN Management** - Apply for Tax Identification Number
+- **Bank Integration** - Link accounts via Mono/Okra APIs
+- **SabiTax AI Assistant** - AI-powered tax guidance via HuggingFace
+- **Referrals** - Earn ₦1,000 per referral (₦50,000 monthly cap)
+- **Notifications** - Tax reminders and updates
 
 ## Tech Stack
 
 - **Framework**: FastAPI
-- **Database**: PostgreSQL (async with asyncpg)
-- **ORM**: SQLAlchemy 2.0
+- **Database**: PostgreSQL (NeonDB compatible)
+- **ORM**: SQLAlchemy 2.0 (async)
 - **Auth**: JWT with python-jose
 - **Validation**: Pydantic v2
 - **Migrations**: Alembic
-- **Testing**: pytest-asyncio
+- **Package Manager**: uv
+- **Testing**: pytest-asyncio (54 tests)
 
 ## Quick Start
 
@@ -68,9 +69,11 @@ uv run uvicorn main:app --reload
 |----------|-------------|
 | `DATABASE_URL` | PostgreSQL connection string |
 | `JWT_SECRET_KEY` | Secret key for JWT tokens |
-| `OPENAI_API_KEY` | OpenAI API key for AI chat |
+| `NEXUSBERT_API_URL` | SabiTax AI HuggingFace Space URL |
+| `NEXUSBERT_API_KEY` | SabiTax AI API key (optional) |
 | `MONO_SECRET_KEY` | Mono API key (optional) |
 | `OKRA_SECRET_KEY` | Okra API key (optional) |
+| `CORS_ORIGINS` | Allowed CORS origins |
 
 ## API Documentation
 
@@ -85,10 +88,16 @@ Once running, visit:
 | `POST /api/v1/auth/register` | Create account |
 | `POST /api/v1/auth/login` | Login |
 | `GET /api/v1/users/me` | Get profile |
+| `PATCH /api/v1/users/me` | Update profile |
+| `GET /api/v1/users/me/stats` | Dashboard stats |
 | `GET /api/v1/transactions` | List transactions |
 | `GET /api/v1/tax/estimate` | Get tax estimate |
 | `POST /api/v1/tax/file` | File tax return |
 | `POST /api/v1/chat` | AI tax assistant |
+| `GET /api/v1/referrals` | Referral info |
+| `POST /api/v1/referrals/apply` | Apply referral code |
+| `GET /api/v1/banks` | Linked bank accounts |
+| `GET /api/v1/notifications` | User notifications |
 | `GET /api/v1/health` | Health check |
 
 ## Nigerian Tax Features
@@ -112,12 +121,11 @@ Once running, visit:
 ## Testing
 
 ```bash
-# Install test dependencies
-uv add --dev pytest pytest-asyncio aiosqlite
-
-# Run tests
+# Run all tests
 uv run pytest -v
 ```
+
+54 tests covering authentication, user profiles, referrals, tax calculations, and integrations.
 
 ## Deployment
 
@@ -125,7 +133,7 @@ uv run pytest -v
 
 1. Create a new Space with Docker SDK
 2. Add environment variables in Settings
-3. Push the repository
+3. Link the GitHub repository
 
 ### Docker
 
@@ -148,7 +156,7 @@ sabitax-backend/
 │   ├── config.py        # Settings
 │   └── database.py      # DB connection
 ├── alembic/             # Database migrations
-├── tests/               # Test files
+├── tests/               # Test files (54 tests)
 ├── main.py              # FastAPI app
 ├── Dockerfile
 └── pyproject.toml
